@@ -12,12 +12,6 @@ namespace LTE_ASP_Base.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
-        
-        [HttpGet("test")]
-        public string test()
-        {
-            return "this is home test!";
-        }
 
         public HomeController(ILogger<HomeController> logger)
         {
