@@ -1,18 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using BaseApplication;
 using LTE_ASP_Base.Helpers;
 using LTE_ASP_Base.Services;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.IdentityModel.Tokens;
 
 namespace LTE_ASP_Base
 {
@@ -21,6 +14,7 @@ namespace LTE_ASP_Base
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
+            BaseStartup.InitConfig(configuration);
         }
 
         public IConfiguration Configuration { get; }
@@ -28,14 +22,17 @@ namespace LTE_ASP_Base
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddCors();
-            services.AddControllersWithViews();
+            BaseStartup.ConfigureServices(services, Configuration, servicesCollection =>
+            {
+                servicesCollection.AddCors();
+                servicesCollection.AddControllersWithViews();
             
-            // configure strongly typed settings object
-            services.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
-            
-            // configure DI for application services
-            services.AddScoped<IUserService, UserService>();
+                // configure strongly typed settings object
+                servicesCollection.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
+                // configure DI for application services
+                servicesCollection.AddScoped<IUserService, UserService>();
+                return servicesCollection;
+            }, false, true);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
