@@ -4,4 +4,9 @@
         <TargetFramework>net5.0</TargetFramework>
     </PropertyGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\AccountManager.Shared\AccountManager.Shared.csproj" />
+      <ProjectReference Include="..\BaseApplication\BaseApplication.csproj" />
+    </ItemGroup>
+
 </Project>

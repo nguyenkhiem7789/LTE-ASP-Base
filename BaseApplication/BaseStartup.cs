@@ -24,7 +24,7 @@ namespace BaseApplication
         public static void ConfigureServices(IServiceCollection services, IConfiguration configuration,
             Func<IServiceCollection, IServiceCollection> registerServiceFunc, bool isWeb, bool isCheckAuthen)
         {
-            services.AddC
+            services.AddCors();
             services.AddTransient<IDbConnectionFactory>(p =>
                 new DbConnectionFactory(ConfigSettingEnum.DbConnectionString.GetConfig()));
             registerServiceFunc(services);

@@ -5,11 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\BaseCommands\BaseCommands.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Events" />
+      <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="2.2.0" />
     </ItemGroup>
 
 </Project>

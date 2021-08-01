@@ -5,11 +5,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\BaseCommands\BaseCommands.csproj" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <Folder Include="Events" />
+      <ProjectReference Include="..\Configs\Configs.csproj" />
+      <ProjectReference Include="..\EnumDefine\EnumDefine.csproj" />
     </ItemGroup>
 
 </Project>

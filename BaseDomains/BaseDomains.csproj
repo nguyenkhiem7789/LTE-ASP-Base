@@ -6,6 +6,8 @@
 
     <ItemGroup>
       <ProjectReference Include="..\BaseReadModels\BaseReadModels.csproj" />
+      <ProjectReference Include="..\Common\Common.csproj" />
+      <ProjectReference Include="..\Extensions\Extensions.csproj" />
     </ItemGroup>
 
 </Project>

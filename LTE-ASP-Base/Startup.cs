@@ -24,9 +24,7 @@ namespace LTE_ASP_Base
         {
             BaseStartup.ConfigureServices(services, Configuration, servicesCollection =>
             {
-                servicesCollection.AddCors();
                 servicesCollection.AddControllersWithViews();
-            
                 // configure strongly typed settings object
                 servicesCollection.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
                 // configure DI for application services
