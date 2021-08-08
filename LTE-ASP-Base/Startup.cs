@@ -1,6 +1,10 @@
+using AccountManager;
+using AccountManager.Shared;
+using AccountRepository;
+using AccountRepositorySQLImplement;
 using BaseApplication;
+using BaseApplication.Interfaces;
 using LTE_ASP_Base.Helpers;
-using LTE_ASP_Base.Services;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
@@ -28,7 +32,10 @@ namespace LTE_ASP_Base
                 // configure strongly typed settings object
                 servicesCollection.Configure<AppSettings>(Configuration.GetSection("AppSettings"));
                 // configure DI for application services
-                servicesCollection.AddScoped<IUserService, UserService>();
+                servicesCollection.AddHttpContextAccessor();
+                //servicesCollection.AddScoped<IContextService, ContextS>()
+                servicesCollection.AddScoped<IAccountService, AccountService>();
+                servicesCollection.AddTransient<IUserRepository, UserRepository>();
                 return servicesCollection;
             }, false, true);
         }

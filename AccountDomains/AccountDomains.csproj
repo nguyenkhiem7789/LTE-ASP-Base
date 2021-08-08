@@ -5,6 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\AccountCommands\AccountCommands.csproj" />
       <ProjectReference Include="..\AccountReadModels\AccountReadModels.csproj" />
       <ProjectReference Include="..\BaseDomains\BaseDomains.csproj" />
     </ItemGroup>

@@ -4,8 +4,6 @@ using AccountCommands.Commands;
 using AccountCommands.Queries;
 using AccountReadModels;
 using BaseCommands;
-using LTE_ASP_Base.Entities;
-using LTE_ASP_Base.Models;
 
 namespace AccountManager.Shared
 {

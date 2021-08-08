@@ -6,6 +6,7 @@
 
     <ItemGroup>
       <ProjectReference Include="..\AccountManager.Shared\AccountManager.Shared.csproj" />
+      <ProjectReference Include="..\AccountRepository\AccountRepository.csproj" />
       <ProjectReference Include="..\BaseApplication\BaseApplication.csproj" />
     </ItemGroup>
 

@@ -10,4 +10,6 @@ namespace LTE_ASP_Base.Models
         [Required]
         public string Password { get; set; }
     }
+    
+    
 }

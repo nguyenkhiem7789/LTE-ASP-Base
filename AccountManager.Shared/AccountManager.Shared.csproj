@@ -7,7 +7,6 @@
     <ItemGroup>
       <ProjectReference Include="..\AccountCommands\AccountCommands.csproj" />
       <ProjectReference Include="..\AccountReadModels\AccountReadModels.csproj" />
-      <ProjectReference Include="..\LTE-ASP-Base\LTE-ASP-Base.csproj" />
     </ItemGroup>
 
 </Project>

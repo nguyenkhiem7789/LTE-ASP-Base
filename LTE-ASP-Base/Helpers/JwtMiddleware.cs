@@ -3,7 +3,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using LTE_ASP_Base.Services;
+using AccountManager.Shared;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
@@ -21,7 +21,7 @@ namespace LTE_ASP_Base.Helpers
             _appSettings = appSettings.Value;
         }
 
-        public async Task Invoke(HttpContext context, IUserService userService)
+        public async Task Invoke(HttpContext context, IAccountService userService)
         {
             var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
             if(token != null) 
@@ -29,7 +29,7 @@ namespace LTE_ASP_Base.Helpers
             await _next(context);
         }
 
-        private void AttachUserToContext(HttpContext context, IUserService userService, string token)
+        private void AttachUserToContext(HttpContext context, IAccountService userService, string token)
         {
             try
             {
@@ -47,7 +47,7 @@ namespace LTE_ASP_Base.Helpers
                 var jwtToken = (JwtSecurityToken) validatedToken;
                 var userId = int.Parse(jwtToken.Claims.First(x => x.Type == "id").Value);
                 // attach user to context on successful jwt validation
-                context.Items["User"] = userService.GetById(userId);
+                //context.Items["User"] = userService.GetById(userId);
             }
             catch
             {

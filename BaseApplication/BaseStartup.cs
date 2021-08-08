@@ -1,8 +1,10 @@
 ﻿
 using System;
 using System.Linq;
+using BaseApplication.Interfaces;
 using BaseRepositories;
 using Configs;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Configuration.Json;
 using Microsoft.Extensions.DependencyInjection;
@@ -28,6 +30,11 @@ namespace BaseApplication
             services.AddTransient<IDbConnectionFactory>(p =>
                 new DbConnectionFactory(ConfigSettingEnum.DbConnectionString.GetConfig()));
             registerServiceFunc(services);
+            /*services.AddTransient<IContextService>(p =>
+            {
+                IHttpContextAccessor httpContextAccessor = p.GetRequiredService<IHttpContextAccessor>();
+                return new ContextService(httpContextAccessor, p);
+            });*/
         }
-    }
+    } 
 }

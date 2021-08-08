@@ -12,12 +12,12 @@ namespace BaseApplication.Implements
 {
     public class BaseService: BaseEventHandler, IBaseService
     {
-        protected readonly IContextService ContextService;
+        //protected readonly IContextService ContextService;
         private new readonly ILogger<BaseService> _logger;
 
-        protected BaseService(IContextService contextService, ILogger<BaseService> logger) : base(logger)
+        protected BaseService(/*IContextService contextService, */ILogger<BaseService> logger) : base(logger)
         {
-            ContextService = contextService;
+           //ContextService = contextService;
             _logger = logger;
         }
 
@@ -40,7 +40,7 @@ namespace BaseApplication.Implements
                     response.SetFail(e.Message);
                 }
 
-                ContextService.LogError(e, e.Message);
+                //ContextService.LogError(e, e.Message);
             }
             return response;
         }
