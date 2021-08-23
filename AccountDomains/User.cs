@@ -1,7 +1,9 @@
 ﻿using System.Runtime.Serialization;
+using System.Text;
 using AccountCommands.Commands;
 using AccountReadModels;
 using BaseDomains;
+using Common;
 
 namespace AccountDomains
 {
@@ -17,16 +19,17 @@ namespace AccountDomains
         {
             FullName = user.FullName;
             Email = user.FullName;
-            PasswordHash = user.PasswordHash;
-            PasswordSalt = user.PasswordSalt;
             Password = user.Password;
         }
 
-        public User(AccountAddCommand command)
+        public User(UserAddCommand command) : base(command)
         {
+            Code = command.Code;
             FullName = command.FullName;
             Email = command.Email;
             Password = command.Password;
+            PasswordHash = EncryptionExtensions.Encryption(Code, command.Password, out string salf);
+            PasswordSalt = salf;
         }
     }
 }

@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
+using SystemCommands.Commands;
+using SystemManager.Shared;
 using AccountCommands.Commands;
 using AccountManager.Shared;
+using AccountReadModels;
 using BaseApplication.Controllers;
 using BaseReadModels;
-using LTE_ASP_Base.Helpers;
 using LTE_ASP_Base.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -16,26 +18,30 @@ namespace LTE_ASP_Base.Controllers
     [Route("[controller]")]
     public class UsersController: BaseApiController
     {
-        private readonly IAccountService _accountService;
+        private readonly IUserService _userService;
+
+        private readonly ICommonService _commonService;
         
-        public UsersController(IHttpContextAccessor httpContextAccessor, IAccountService accountService) : base(httpContextAccessor)
+        public UsersController(IHttpContextAccessor httpContextAccessor, IUserService userService, ICommonService commonService) : base(httpContextAccessor)
         {
-            _accountService = accountService;
+            _userService = userService;
+            _commonService = commonService;
         }
 
-        [HttpGet("test")]
-        public string test()
-        {
-            return "This is test!!!!";
-        }
-        
-        [HttpPost("addUser")]
-        public async Task<BaseResponse<object>> AddUser([FromBody] UserAddRequest request)
+        [HttpPost("add")]
+        public async Task<BaseResponse<object>> Add([FromBody] UserAddRequest request)
         {
             return await ProcessRequest<object>(async (response) =>
             {
-                var result = await _accountService.Add(new AccountAddCommand()
+                var code = await _commonService.GetNextCode(new GetNextCodeQuery()
                 {
+                    ProcessUid = string.Empty,
+                    TypeName = typeof(RUser).FullName
+                });
+                var result = await _userService.Add(new UserAddCommand()
+                {
+                    Code = code,
+                    ObjectId = code,
                     FullName = request.FullName,
                     Password = request.Password
                 });

@@ -69,5 +69,11 @@ namespace Extensions
         {
             return DateTime.Now;
         }
+
+        public static void ExceptionAddParam(this Exception exception, string method, object input)
+        {
+            exception.Data["Method"] = method;
+            exception.Data["Input"] = input;
+        }
     }
 }

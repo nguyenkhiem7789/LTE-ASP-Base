@@ -5,8 +5,7 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Microsoft.AspNetCore.Cryptography.KeyDerivation" Version="5.0.9" />
-      <PackageReference Include="PBKDF2.NETCore" Version="1.0.0" />
+      <ProjectReference Include="..\SystemCommands\SystemCommands.csproj" />
     </ItemGroup>
 
 </Project>

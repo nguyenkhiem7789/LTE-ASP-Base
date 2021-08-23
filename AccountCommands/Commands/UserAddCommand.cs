@@ -3,8 +3,9 @@ using BaseCommands;
 
 namespace AccountCommands.Commands
 {
-    public class AccountAddCommand : BaseCommand
+    public class UserAddCommand : BaseCommand
     {
+        public string Code { get; set; }
         public string FullName { get; set; }
         public string Email { get; set; }
         public string Password { get; set; }

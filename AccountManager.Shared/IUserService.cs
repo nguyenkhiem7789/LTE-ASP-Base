@@ -7,10 +7,10 @@ using BaseCommands;
 
 namespace AccountManager.Shared
 {
-    public interface IAccountService
+    public interface IUserService
     {
-        Task<BaseCommandResponse<RUser[]>> Gets(AccountGetsQuery query); 
+        Task<BaseCommandResponse<RUser[]>> Gets(UserGetsQuery query); 
         
-        Task<BaseCommandResponse<string>> Add(AccountAddCommand command);
+        Task<BaseCommandResponse<string>> Add(UserAddCommand command);
     }
 }

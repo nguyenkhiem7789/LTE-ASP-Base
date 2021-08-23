@@ -13,22 +13,22 @@ using Microsoft.Extensions.Logging;
 
 namespace AccountManager
 {
-    public class AccountService : BaseService, IAccountService
+    public class UserService : BaseService, IUserService
     {
 
         private IUserRepository _userRepository;
         
-        public AccountService(/*IContextService contextService, */ILogger<BaseService> logger, IUserRepository userRepository) : base(/*contextService, */logger)
+        public UserService(/*IContextService contextService, */ILogger<BaseService> logger, IUserRepository userRepository) : base(/*contextService, */logger)
         {
             _userRepository = userRepository;
         }
 
-        public Task<BaseCommandResponse<RUser[]>> Gets(AccountGetsQuery query)
+        public Task<BaseCommandResponse<RUser[]>> Gets(UserGetsQuery query)
         {
             throw new System.NotImplementedException();
         }
 
-        public async Task<BaseCommandResponse<string>> Add(AccountAddCommand command)
+        public async Task<BaseCommandResponse<string>> Add(UserAddCommand command)
         {
             return await ProcessCommand<string>(async response =>
             {

@@ -21,7 +21,7 @@ namespace LTE_ASP_Base.Helpers
             _appSettings = appSettings.Value;
         }
 
-        public async Task Invoke(HttpContext context, IAccountService userService)
+        public async Task Invoke(HttpContext context, IUserService userService)
         {
             var token = context.Request.Headers["Authorization"].FirstOrDefault()?.Split(" ").Last();
             if(token != null) 
@@ -29,7 +29,7 @@ namespace LTE_ASP_Base.Helpers
             await _next(context);
         }
 
-        private void AttachUserToContext(HttpContext context, IAccountService userService, string token)
+        private void AttachUserToContext(HttpContext context, IUserService userService, string token)
         {
             try
             {

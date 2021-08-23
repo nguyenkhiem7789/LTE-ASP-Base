@@ -1,4 +1,5 @@
 ﻿using System;
+using BaseCommands;
 using BaseReadModels;
 using Common;
 using Extensions;
@@ -28,6 +29,19 @@ namespace BaseDomains
             UpdatedUid = CreatedUid;
             UpdatedDate = CreatedDate;
             UpdatedDateUtc = CreateDateUtc;
+            Version = 0;
+        }
+
+        public BaseDomain(BaseCommand command)
+        {
+            if (command == null) return;
+            CreatedDate = command.ProcessDate;
+            CreateDateUtc = command.ProcessDateUtc;
+            CreatedUid = command.ProcessUid.AsEmpty();
+            UpdatedDate = command.ProcessDate;
+            UpdatedDateUtc = command.ProcessDateUtc;
+            UpdatedUid = command.ProcessUid.AsEmpty();
+            LoginUid = command.LoginUid.AsEmpty();
             Version = 0;
         }
 

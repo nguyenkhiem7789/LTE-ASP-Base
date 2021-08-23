@@ -5,10 +5,12 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <Folder Include="Events" />
+      <Folder Include="Queries" />
+    </ItemGroup>
+
+    <ItemGroup>
       <ProjectReference Include="..\BaseCommands\BaseCommands.csproj" />
-      <ProjectReference Include="..\BaseReadModels\BaseReadModels.csproj" />
-      <ProjectReference Include="..\Common\Common.csproj" />
-      <ProjectReference Include="..\Extensions\Extensions.csproj" />
     </ItemGroup>
 
 </Project>

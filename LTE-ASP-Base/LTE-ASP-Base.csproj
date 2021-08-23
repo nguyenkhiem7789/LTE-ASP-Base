@@ -24,6 +24,9 @@
       <ProjectReference Include="..\BaseDomains\BaseDomains.csproj" />
       <ProjectReference Include="..\BaseRepositories\BaseRepositories.csproj" />
       <ProjectReference Include="..\Common\Common.csproj" />
+      <ProjectReference Include="..\SystemManager.Shared\SystemManager.Shared.csproj" />
+      <ProjectReference Include="..\SystemManager\SystemManager.csproj" />
+      <ProjectReference Include="..\SystemRepositorySQLImplement\SystemRepositorySQLImplement.csproj" />
     </ItemGroup>
 
 </Project>
