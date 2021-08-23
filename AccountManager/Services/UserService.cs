@@ -1,9 +1,11 @@
 ﻿using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using AccountCommands.Commands;
 using AccountCommands.Queries;
 using AccountDomains;
 using AccountManager.Shared;
+using AccountManager.Validations;
 using AccountReadModels;
 using AccountRepository;
 using BaseApplication.Implements;
@@ -23,15 +25,26 @@ namespace AccountManager
             _userRepository = userRepository;
         }
 
-        public Task<BaseCommandResponse<RUser[]>> Gets(UserGetsQuery query)
+        public async Task<BaseCommandResponse<RUser[]>> Gets(UserGetsQuery query)
         {
-            throw new System.NotImplementedException();
+            return await ProcessCommand<RUser[]>(async response =>
+            {
+                var users = await _userRepository.Gets(query: query);
+                response.Data = users;
+                response.SetSuccess();
+            });
         }
 
         public async Task<BaseCommandResponse<string>> Add(UserAddCommand command)
         {
             return await ProcessCommand<string>(async response =>
             {
+                var results = UserValidator.ValidateModel(command);
+                if (!results.IsValid)
+                {
+                    response.SetFail(results.Errors.Select(p => p.ToString()));
+                    return;
+                }
                 var user = new User(command);
                 await _userRepository.Add(user);
                 response.Data = user.Id;

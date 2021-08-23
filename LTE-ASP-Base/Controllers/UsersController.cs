@@ -1,13 +1,16 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using SystemCommands.Commands;
 using SystemManager.Shared;
 using AccountCommands.Commands;
+using AccountCommands.Queries;
 using AccountManager.Shared;
 using AccountReadModels;
 using BaseApplication.Controllers;
 using BaseReadModels;
 using LTE_ASP_Base.Models;
+using LTE_ASP_Base.Validations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -28,11 +31,17 @@ namespace LTE_ASP_Base.Controllers
             _commonService = commonService;
         }
 
-        [HttpPost("add")]
+        [HttpPost("Add")]
         public async Task<BaseResponse<object>> Add([FromBody] UserAddRequest request)
         {
             return await ProcessRequest<object>(async (response) =>
             {
+                var results = UserValidator.ValidateModel(request);
+                if (!results.IsValid)
+                {
+                    response.SetFail(results.Errors.Select(p => p.ToString()));
+                    return;
+                }
                 var code = await _commonService.GetNextCode(new GetNextCodeQuery()
                 {
                     ProcessUid = string.Empty,
@@ -50,7 +59,35 @@ namespace LTE_ASP_Base.Controllers
                     response.SetFail(result.Messages);
                     return;
                 }
+                response.Data = new
+                {
+                    Models = result.Data
+                };
+                response.SetSuccess();
+            });
+        }
 
+        [HttpPost("Gets")]
+        public async Task<BaseResponse<object>> Gets([FromBody] UserGetRequest request)
+        {
+            return await ProcessRequest<object>(async (response) =>
+            {
+                var result = await _userService.Gets(new UserGetsQuery()
+                {
+                    Keyword = request.Keyword
+                });
+                if (!result.Status)
+                {
+                    response.SetFail(result.Messages);
+                    return;
+                }
+                response.Data = new
+                {
+                    Models = result.Data?.Select(x => new UserModel()
+                    {
+                        FullName = x.FullName
+                    })
+                };
                 response.SetSuccess();
             });
         }
