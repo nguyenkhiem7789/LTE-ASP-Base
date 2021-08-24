@@ -36,7 +36,7 @@ namespace LTE_ASP_Base.Controllers
         {
             return await ProcessRequest<object>(async (response) =>
             {
-                var results = UserValidator.ValidateModel(request);
+                var results = UserAddValidator.ValidateModel(request);
                 if (!results.IsValid)
                 {
                     response.SetFail(results.Errors.Select(p => p.ToString()));
@@ -52,6 +52,7 @@ namespace LTE_ASP_Base.Controllers
                     Code = code,
                     ObjectId = code,
                     FullName = request.FullName,
+                    Email = request.Email,
                     Password = request.Password
                 });
                 if (!result.Status)
@@ -63,6 +64,32 @@ namespace LTE_ASP_Base.Controllers
                 {
                     Models = result.Data
                 };
+                response.SetSuccess();
+            });
+        }
+
+        [HttpPost("Change")]
+        public async ValueTask<BaseResponse> Change([FromBody] UserChangeRequest request)
+        {
+            return await ProcessRequest(async (response) =>
+            {
+                var results = UserChangeValidator.ValidateModel(request);
+                if (!results.IsValid)
+                {
+                    response.SetFail(results.Errors.Select(p => p.ToString()));
+                    return;
+                }
+                var result = await _userService.Change(new UserChangeCommand()
+                {
+                    Id = request.Id,
+                    FullName = request.FullName,
+                    Email = request.Email
+                });
+                if (!result.Status)
+                {
+                    response.SetFail(result.Messages);
+                    return;
+                }
                 response.SetSuccess();
             });
         }
@@ -85,7 +112,9 @@ namespace LTE_ASP_Base.Controllers
                 {
                     Models = result.Data?.Select(x => new UserModel()
                     {
-                        FullName = x.FullName
+                        Id = x.Id,
+                        FullName = x.FullName,
+                        Email = x.Email
                     })
                 };
                 response.SetSuccess();

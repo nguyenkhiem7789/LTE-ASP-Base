@@ -13,4 +13,9 @@ namespace AccountCommands.Queries
         public override int PageIndex { get; set; }
         public override int PageSize { get; set; }
     }
+
+    public class UserGetByIdQuery : AccountBaseCommand
+    {
+        public string Id { get; set; }
+    }
 }

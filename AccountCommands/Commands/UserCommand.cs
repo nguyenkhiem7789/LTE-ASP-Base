@@ -14,4 +14,9 @@ namespace AccountCommands.Commands
         public override DateTime ProcessDate { get; set; }
         public override string LoginUid { get; set; }
     }
+
+    public class UserChangeCommand : UserAddCommand
+    {
+        public string Id { get; set; }
+    }
 }

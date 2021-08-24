@@ -4,6 +4,7 @@ using AccountCommands.Commands;
 using AccountReadModels;
 using BaseDomains;
 using Common;
+using Microsoft.Extensions.Primitives;
 
 namespace AccountDomains
 {
@@ -19,17 +20,22 @@ namespace AccountDomains
         {
             FullName = user.FullName;
             Email = user.FullName;
-            Password = user.Password;
         }
 
         public User(UserAddCommand command) : base(command)
         {
-            Code = command.Code;
             FullName = command.FullName;
             Email = command.Email;
             Password = command.Password;
             PasswordHash = EncryptionExtensions.Encryption(Code, command.Password, out string salf);
             PasswordSalt = salf;
+        }
+
+        public void Change(UserChangeCommand command)
+        {
+            Code = command.Id;
+            FullName = command.FullName;
+            Email = command.Email;
         }
     }
 }

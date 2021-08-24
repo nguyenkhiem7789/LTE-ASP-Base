@@ -30,7 +30,7 @@ namespace BaseApplication.Controllers
             }
         }
 
-        private async Task<BaseResponse> ProcessRequest(Func<BaseResponse, Task> processFunc)
+        protected async Task<BaseResponse> ProcessRequest(Func<BaseResponse, Task> processFunc)
         {
             BaseResponse response = new BaseResponse();
             try

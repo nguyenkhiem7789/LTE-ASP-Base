@@ -7,8 +7,10 @@ namespace AccountRepository
 {
     public interface IUserRepository
     {
-        Task Add(User user);
-
         Task<RUser[]> Gets(UserGetsQuery query);
+        Task<RUser> GetById(UserGetByIdQuery query);
+        Task Add(User user);
+        Task Change(User user);
+
     }
 }
