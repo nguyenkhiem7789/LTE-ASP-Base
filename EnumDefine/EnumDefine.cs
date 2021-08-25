@@ -18,4 +18,11 @@
         NullRequestExceptions = 501,
         PermissionDeny = 403
     }
+
+    public enum UserStatusEnum
+    {
+        Delete = 0,
+        Active = 1,
+        InActive = 2
+    }
 }

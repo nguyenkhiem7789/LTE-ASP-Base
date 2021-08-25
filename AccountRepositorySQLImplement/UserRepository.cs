@@ -27,6 +27,7 @@ namespace AccountRepositorySQLImplement
                 parameters.Add("@ID", user.Id);
                 parameters.Add("@FullName", user.FullName);
                 parameters.Add("@Email", user.Email);
+                parameters.Add("@Status", user.Status);
                 parameters.Add("@PasswordHash", user.PasswordHash);
                 parameters.Add("@PasswordSalt", user.PasswordSalt);
                 parameters.Add("@CreatedDate", user.CreatedDate);
@@ -44,6 +45,7 @@ namespace AccountRepositorySQLImplement
                 parameters.Add("@ID", user.Id);
                 parameters.Add("@FullName", user.FullName);
                 parameters.Add("@Email", user.Email);
+                parameters.Add("@Status", user.Status);
                 var data = connection.Execute("[User_Update]", parameters, commandType: CommandType.StoredProcedure);
                 return await Task.FromResult(true);
             });

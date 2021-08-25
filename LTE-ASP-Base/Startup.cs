@@ -9,6 +9,7 @@ using AccountRepositorySQLImplement;
 using BaseApplication;
 using BaseApplication.Interfaces;
 using LTE_ASP_Base.Helpers;
+using LTE_ASP_Base.RMS;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc.ApplicationModels;
@@ -43,6 +44,7 @@ namespace LTE_ASP_Base
                 servicesCollection.AddTransient<IUserRepository, UserRepository>();
                 servicesCollection.AddScoped<ICommonService, CommonService>();
                 servicesCollection.AddScoped<ICommonRepository, CommonRepository>();
+                servicesCollection.AddSignalR();
                 return servicesCollection;
             }, false, true);
         }
@@ -79,7 +81,10 @@ namespace LTE_ASP_Base
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
+                endpoints.MapHub<NotificationHub>("/vnnnotifies");
             });
+            
+            
         }
     }
 }

@@ -4,6 +4,7 @@ using AccountCommands.Commands;
 using AccountReadModels;
 using BaseDomains;
 using Common;
+using EnumDefine;
 using Microsoft.Extensions.Primitives;
 
 namespace AccountDomains
@@ -12,6 +13,7 @@ namespace AccountDomains
     {
         public string FullName { get; set; }
         public string Email { get; set; }
+        public UserStatusEnum Status {get; set; }
         public string Password { get; set; }
         public string PasswordHash { get; set; }
         public string PasswordSalt { get; set; }
@@ -20,12 +22,15 @@ namespace AccountDomains
         {
             FullName = user.FullName;
             Email = user.FullName;
+            Status = user.Status;
         }
 
         public User(UserAddCommand command) : base(command)
         {
+            Code = command.Code;
             FullName = command.FullName;
             Email = command.Email;
+            Status = command.Status;
             Password = command.Password;
             PasswordHash = EncryptionExtensions.Encryption(Code, command.Password, out string salf);
             PasswordSalt = salf;
@@ -33,9 +38,10 @@ namespace AccountDomains
 
         public void Change(UserChangeCommand command)
         {
-            Code = command.Id;
-            FullName = command.FullName;
-            Email = command.Email;
+            Code = command.Id ?? command.Id;
+            FullName = command.FullName ?? command.FullName;
+            Email = command.Email ?? command.Email;
+            Status = command.Status;
         }
     }
 }

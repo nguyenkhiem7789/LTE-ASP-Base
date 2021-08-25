@@ -1,9 +1,12 @@
-﻿namespace AccountReadModels
+﻿using EnumDefine;
+
+namespace AccountReadModels
 {
     public class RUser : AccountBaseReadModel
     {
         public string FullName { get; set; }
         public string Email { get; set; }
+        public UserStatusEnum Status {get; set; }
         public string PasswordHash { get; set; }
         public string PasswordSalt { get; set; }
         public string Password { get; set; }

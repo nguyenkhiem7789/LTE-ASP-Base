@@ -17,7 +17,6 @@ using Microsoft.AspNetCore.Mvc;
 namespace LTE_ASP_Base.Controllers
 {
     [ApiController]
-    
     [Route("[controller]")]
     public class UsersController: BaseApiController
     {
@@ -53,6 +52,7 @@ namespace LTE_ASP_Base.Controllers
                     ObjectId = code,
                     FullName = request.FullName,
                     Email = request.Email,
+                    Status = request.Status,
                     Password = request.Password
                 });
                 if (!result.Status)
@@ -83,7 +83,8 @@ namespace LTE_ASP_Base.Controllers
                 {
                     Id = request.Id,
                     FullName = request.FullName,
-                    Email = request.Email
+                    Email = request.Email,
+                    Status = request.Status
                 });
                 if (!result.Status)
                 {
@@ -114,7 +115,8 @@ namespace LTE_ASP_Base.Controllers
                     {
                         Id = x.Id,
                         FullName = x.FullName,
-                        Email = x.Email
+                        Email = x.Email,
+                        Status = x.Status
                     })
                 };
                 response.SetSuccess();
