@@ -31,9 +31,9 @@ namespace BaseApplication.Implements
             catch (Exception e)
             {
                 if (e.Data.Contains(Constant.ErrorCodeEnum) &&
-                    Enum.TryParse(e.Data[Constant.ErrorCodeEnum].AsString(), out ErrorCodeEnum _))
+                    Enum.TryParse(e.Data[Constant.ErrorCodeEnum].AsString(), out ErrorCodeType _))
                 {
-                    response.SetFail((ErrorCodeEnum) e.Data[Constant.ErrorCodeEnum]);
+                    response.SetFail((ErrorCodeType) e.Data[Constant.ErrorCodeEnum]);
                 }
                 else
                 {

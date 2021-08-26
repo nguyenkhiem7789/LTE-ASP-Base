@@ -41,14 +41,14 @@ namespace BaseApplication.Controllers
             {
                 if (e.Message.Contains("HTTP status code: 401"))
                 {
-                    response.SetFail(ErrorCodeEnum.Unauthorized);
+                    response.SetFail(ErrorCodeType.Unauthorized);
                 }
                 else
                 {
                     if (e.Data.Contains(Constant.ErrorCodeEnum) && Enum.TryParse(
-                        e.Data[Constant.ErrorCodeEnum].AsString(), out EnumDefine.ErrorCodeEnum errorCodeValue))
+                        e.Data[Constant.ErrorCodeEnum].AsString(), out EnumDefine.ErrorCodeType errorCodeValue))
                     {
-                        response.SetFail((EnumDefine.ErrorCodeEnum) e.Data[Constant.ErrorCodeEnum]);
+                        response.SetFail((EnumDefine.ErrorCodeType) e.Data[Constant.ErrorCodeEnum]);
                     }
                     else
                     {
@@ -72,14 +72,14 @@ namespace BaseApplication.Controllers
             {
                 if (e.Message.Contains("HTTP status code: 401"))
                 {
-                    response.SetFail(ErrorCodeEnum.Unauthorized);
+                    response.SetFail(ErrorCodeType.Unauthorized);
                 }
                 else
                 {
                     if (e.Data.Contains(Constant.ErrorCodeEnum) && Enum.TryParse(
-                        e.Data[Constant.ErrorCodeEnum].AsString(), out EnumDefine.ErrorCodeEnum errorCodeValue))
+                        e.Data[Constant.ErrorCodeEnum].AsString(), out EnumDefine.ErrorCodeType errorCodeValue))
                     {
-                        response.SetFail((EnumDefine.ErrorCodeEnum) e.Data[Constant.ErrorCodeEnum]);
+                        response.SetFail((EnumDefine.ErrorCodeType) e.Data[Constant.ErrorCodeEnum]);
                     }
                     else
                     {

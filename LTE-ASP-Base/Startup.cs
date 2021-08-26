@@ -45,6 +45,7 @@ namespace LTE_ASP_Base
                 servicesCollection.AddScoped<ICommonService, CommonService>();
                 servicesCollection.AddScoped<ICommonRepository, CommonRepository>();
                 servicesCollection.AddSignalR();
+                servicesCollection.AddSingleton<INotificationService, NotificationService>();
                 return servicesCollection;
             }, false, true);
         }
@@ -67,24 +68,23 @@ namespace LTE_ASP_Base
             app.UseStaticFiles();
 
             app.UseRouting();
-
-            app.UseCors(x => x
-                .AllowAnyOrigin()
-                .AllowAnyMethod()
-                .AllowAnyHeader());
             
+            app.UseCors(x => x
+                .AllowAnyMethod()
+                .AllowAnyHeader()
+                .SetIsOriginAllowed(origin => true) // allow any origin
+                .AllowCredentials());
+
             // custom jwt auth middleware
             app.UseMiddleware<JwtMiddleware>();
-            
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapHub<NotificationHub>("/vnnnotifies");
+                endpoints.MapHub<NotificationHub>("/signalr");
             });
-            
-            
         }
     }
 }

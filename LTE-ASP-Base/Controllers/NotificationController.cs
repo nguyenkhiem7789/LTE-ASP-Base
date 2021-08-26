@@ -12,10 +12,11 @@ namespace LTE_ASP_Base.RMS
     [Route("[controller]")]
     public class NotificationController: BaseApiController
     {
-        private readonly IHubContext<NotificationHub> _notificationHub;
-        public NotificationController(IHttpContextAccessor httpContextAccessor, IHubContext<NotificationHub> notificationHub) : base(httpContextAccessor)
+        private readonly INotificationService _notificationService;
+        
+        public NotificationController(IHttpContextAccessor httpContextAccessor, INotificationService notificationService) : base(httpContextAccessor)
         {
-            _notificationHub = notificationHub;
+            _notificationService = notificationService;
         }
 
         [HttpPost("Test")]
@@ -24,7 +25,8 @@ namespace LTE_ASP_Base.RMS
             var retMessage = string.Empty;
             try
             {
-                await _notificationHub.Clients.All.SendAsync("Notify", "this is notify test");
+                await _notificationService.SendMessage("this is tessst");
+                retMessage = "success";
             }
             catch (Exception e)
             {

@@ -14,7 +14,7 @@ namespace BaseCommands
             ServerTime = DateTime.Now.AsUnixTimeStamp().ToString();
         }
         public bool Status { get; set; }
-        public ErrorCodeEnum ErrorCode { get; set; }
+        public ErrorCodeType ErrorCode { get; set; }
         public List<string> Messages;
         public int Version { get; set; }
         public string ServerTime { get; set; }
@@ -24,17 +24,17 @@ namespace BaseCommands
         public void SetSuccess()
         {
             Status = true;
-            ErrorCode = ErrorCodeEnum.NoErrorCode;
+            ErrorCode = ErrorCodeType.NoErrorCode;
         }
 
         public void SetSuccess(string message)
         {
             Status = true;
             Messages.Add(message);
-            ErrorCode = ErrorCodeEnum.NoErrorCode;
+            ErrorCode = ErrorCodeType.NoErrorCode;
         }
 
-        public void SetFail(ErrorCodeEnum code)
+        public void SetFail(ErrorCodeType code)
         {
             Status = false;
             ErrorCode = code;
@@ -42,14 +42,14 @@ namespace BaseCommands
             Messages.Add(message);
         }
 
-        public void SetFail(string message, ErrorCodeEnum code = ErrorCodeEnum.NoErrorCode)
+        public void SetFail(string message, ErrorCodeType code = ErrorCodeType.NoErrorCode)
         {
             Status = false;
             ErrorCode = code;
             Messages.Add(message);
         }
 
-        public void SetFail(Exception ex, ErrorCodeEnum code = ErrorCodeEnum.NoErrorCode)
+        public void SetFail(Exception ex, ErrorCodeType code = ErrorCodeType.NoErrorCode)
         {
             Status = false;
             ErrorCode = code;
@@ -57,7 +57,7 @@ namespace BaseCommands
             Messages.Add(message);
         }
 
-        public void SetFail(IEnumerable<string> messages, ErrorCodeEnum code = ErrorCodeEnum.NoErrorCode)
+        public void SetFail(IEnumerable<string> messages, ErrorCodeType code = ErrorCodeType.NoErrorCode)
         {
             Status = false;
             ErrorCode = code;
@@ -71,7 +71,7 @@ namespace BaseCommands
     public class BaseCommandResponse
     {
         public bool Status { get; set; }
-        public ErrorCodeEnum ErrorCode { get; set; }
+        public ErrorCodeType ErrorCode { get; set; }
         public List<string> Messages { get; set; }
         public int Version { get; set; }
         public string ServerTime { get; set; }
@@ -84,17 +84,17 @@ namespace BaseCommands
         public void SetSuccess()
         {
             Status = true;
-            ErrorCode = ErrorCodeEnum.NoErrorCode;
+            ErrorCode = ErrorCodeType.NoErrorCode;
         }
 
         public void SetSuccess(string message)
         {
             Status = true;
             Messages.Add(message);
-            ErrorCode = ErrorCodeEnum.NoErrorCode;
+            ErrorCode = ErrorCodeType.NoErrorCode;
         }
 
-        public void SetFail(ErrorCodeEnum code)
+        public void SetFail(ErrorCodeType code)
         {
             Status = false;
             ErrorCode = code;
@@ -102,14 +102,14 @@ namespace BaseCommands
             Messages.Add(message);
         }
 
-        public void SetFail(string message, ErrorCodeEnum code = ErrorCodeEnum.NoErrorCode)
+        public void SetFail(string message, ErrorCodeType code = ErrorCodeType.NoErrorCode)
         {
             Status = false;
             ErrorCode = code;
             Messages.Add(message);
         }
 
-        public void SetFail(Exception ex, ErrorCodeEnum code = ErrorCodeEnum.NoErrorCode)
+        public void SetFail(Exception ex, ErrorCodeType code = ErrorCodeType.NoErrorCode)
         {
             Status = false;
             ErrorCode = code;
@@ -117,7 +117,7 @@ namespace BaseCommands
             Messages.Add(message);
         }
 
-        public void SetFail(IEnumerable<string> messages, ErrorCodeEnum code = ErrorCodeEnum.NoErrorCode)
+        public void SetFail(IEnumerable<string> messages, ErrorCodeType code = ErrorCodeType.NoErrorCode)
         {
             Status = false;
             ErrorCode = code;

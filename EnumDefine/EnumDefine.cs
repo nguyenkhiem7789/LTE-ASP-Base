@@ -8,7 +8,7 @@
         OldSystem = 4,
         OldSystemToLocal = 5
     }
-    public enum ErrorCodeEnum
+    public enum ErrorCodeType
     {
         NoErrorCode = 0,
         Success = 1,
@@ -19,10 +19,17 @@
         PermissionDeny = 403
     }
 
-    public enum UserStatusEnum
+    public enum UserStatusType
     {
         Delete = 0,
         Active = 1,
         InActive = 2
+    }
+
+    public enum NotificationType
+    {
+        All = 0,
+        GROUP = 1,
+        CLIENT = 2
     }
 }
