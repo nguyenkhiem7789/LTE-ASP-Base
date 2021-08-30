@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using SystemCommands.Commands;
@@ -9,6 +10,7 @@ using AccountManager.Shared;
 using AccountReadModels;
 using BaseApplication.Controllers;
 using BaseReadModels;
+using LTE_ASP_Base.Mappings;
 using LTE_ASP_Base.Models;
 using LTE_ASP_Base.Validations;
 using Microsoft.AspNetCore.Http;
@@ -55,7 +57,7 @@ namespace LTE_ASP_Base.Controllers
                     Status = request.Status,
                     Password = request.Password
                 });
-                if (!result.Status)
+                if (!result.Status || result.Data == null)
                 {
                     response.SetFail(result.Messages);
                     return;
@@ -102,37 +104,53 @@ namespace LTE_ASP_Base.Controllers
             {
                 var result = await _userService.Gets(new UserGetsQuery()
                 {
-                    Keyword = request.Keyword
+                    Keyword = request.Keyword,
+                    Status = request.Status,
+                    PageIndex = request.PageIndex,
+                    PageSize = request.PageSize
                 });
-                if (!result.Status)
+                if (!result.Status || result.Data == null)
                 {
                     response.SetFail(result.Messages);
                     return;
                 }
                 response.Data = new
                 {
-                    Models = result.Data?.Select(x => new UserModel()
-                    {
-                        Id = x.Id,
-                        FullName = x.FullName,
-                        Email = x.Email,
-                        Status = x.Status
-                    })
+                    TotalRow = result.TotalRow,
+                    Models = result.Data?.Select(UserMapping.ToModel)
                 };
                 response.SetSuccess();
             });
         }
 
-        /*[HttpPost("authenticate")]
-        public IActionResult Authenticate(AuthenticateRequest request)
+        [HttpPost("GetById")]
+        public async Task<BaseResponse<object>> GetById([FromBody] UserGetByIdRequest request)
         {
-            var response = _userService.Authenticate(request);
-            if (response == null)
-                return BadRequest(new {message = "Username or password is incorrect"});
-            return Ok(response);
+            return await ProcessRequest<object>(async (response) =>
+            {
+                var results = UserGetByIdValidator.ValidateModel(request);
+                if (!results.IsValid)
+                {
+                    response.SetFail(results.Errors.Select(p => p.ToString()));
+                    return;
+                }
+                var result = await _userService.GetById(new UserGetByIdQuery()
+                {
+                    Id = request.Id
+                });
+                if (!result.Status || result.Data == null) 
+                {
+                    response.SetFail(result.Messages);
+                    return;
+                }
+                response.Data = new
+                {
+                    Models = UserMapping.ToModel(result.Data)
+                };
+            });
         }
 
-        [MyAuthorize]
+        /*[MyAuthorize]
         [HttpGet("getAll")]
         public IActionResult GetAll()
         {

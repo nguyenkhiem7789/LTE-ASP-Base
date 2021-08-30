@@ -1,5 +1,6 @@
 ﻿using System;
 using BaseCommands;
+using EnumDefine;
 
 namespace AccountCommands.Queries
 {
@@ -12,6 +13,7 @@ namespace AccountCommands.Queries
         public override string LoginUid { get; set; }
         public override int PageIndex { get; set; }
         public override int PageSize { get; set; }
+        public UserStatusType Status { get; set; }
     }
 
     public class UserGetByIdQuery : AccountBaseCommand

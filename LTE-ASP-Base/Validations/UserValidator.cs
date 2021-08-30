@@ -33,4 +33,18 @@ namespace LTE_ASP_Base.Validations
         }
     }
     
+    public class UserGetByIdValidator: AbstractValidator<UserGetByIdRequest>
+    {
+        public UserGetByIdValidator()
+        {
+            RuleFor(x => x.Id).NotEmpty().WithMessage("User is not exist.");
+        }
+
+        public static FluentValidation.Results.ValidationResult ValidateModel(UserGetByIdRequest request)
+        {
+            var validationResult = new UserGetByIdValidator().Validate(request);
+            return validationResult;
+        }
+    }
+    
 }
