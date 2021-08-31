@@ -1,4 +1,6 @@
-﻿using System.Runtime.Serialization;
+﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
+using System.Runtime.Serialization;
 using System.Text;
 using AccountCommands.Commands;
 using AccountReadModels;
@@ -9,6 +11,7 @@ using Microsoft.Extensions.Primitives;
 
 namespace AccountDomains
 {
+    [Table("Users")]
     public class User : BaseDomain
     {
         public string FullName { get; set; }
@@ -23,6 +26,9 @@ namespace AccountDomains
             FullName = user.FullName;
             Email = user.FullName;
             Status = user.Status;
+            Password = user.Password;
+            PasswordHash = user.PasswordHash;
+            PasswordSalt = user.PasswordSalt;
         }
 
         public User(UserAddCommand command) : base(command)
@@ -42,6 +48,15 @@ namespace AccountDomains
             FullName = command.FullName ?? command.FullName;
             Email = command.Email ?? command.Email;
             Status = command.Status;
+        }
+
+        public bool ComparePassword(string loginPassword)
+        {
+            Console.WriteLine(Code);
+            Console.WriteLine(loginPassword);
+            Console.WriteLine(PasswordSalt);
+            string passwordHash = EncryptionExtensions.Encryption(Code, loginPassword, PasswordSalt);
+            return PasswordHash.Equals(passwordHash);
         }
     }
 }

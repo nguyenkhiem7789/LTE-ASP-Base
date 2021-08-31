@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using AccountDomains;
 using BaseReadModels;
 
 namespace BaseApplication.Interfaces
@@ -8,7 +9,7 @@ namespace BaseApplication.Interfaces
     {
         Task<string> GetIp();
         Task<bool> IsAuthenticated();
-        Task<(string, int)> CreateToken(string userName, bool remember, AccountLoginInfo accountLoginInfo);
+        Task<(string, int)> CreateToken(User user, bool remember);
         void LogError(Exception exception, string message);
     }
 }

@@ -147,15 +147,32 @@ namespace LTE_ASP_Base.Controllers
                 {
                     Models = UserMapping.ToModel(result.Data)
                 };
+                response.SetSuccess();
             });
         }
-
-        /*[MyAuthorize]
-        [HttpGet("getAll")]
-        public IActionResult GetAll()
+        
+        [HttpPost("Login")]
+        public async Task<BaseResponse<object>> Login([FromBody] AuthenticateRequest request)
         {
-            var users = _userService.GetAll();
-            return Ok(users);
-        }*/
+            return await ProcessRequest<object>(async (response) =>
+            {
+                var result = await _userService.Authenticate(new AuthenticateQuery()
+                {
+                    Username = request.Username,
+                    Password = request.Password
+                });
+                if (!result.Status || result.Data == null)
+                {
+                    response.SetFail(result.Messages);
+                    return;
+                }
+                response.Data = new
+                {
+                    Models = LoginMapping.ToModel(result.Data)
+                };
+                response.SetSuccess();
+            });
+        }
+        
     }
 }

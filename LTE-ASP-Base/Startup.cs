@@ -7,6 +7,7 @@ using AccountManager.Shared;
 using AccountRepository;
 using AccountRepositorySQLImplement;
 using BaseApplication;
+using BaseApplication.Implements;
 using BaseApplication.Interfaces;
 using LTE_ASP_Base.Helpers;
 using LTE_ASP_Base.RMS;
@@ -40,6 +41,7 @@ namespace LTE_ASP_Base
                 // configure DI for application services
                 servicesCollection.AddHttpContextAccessor();
                 //servicesCollection.AddScoped<IContextService, ContextS>()
+                servicesCollection.AddTransient<IContextService, ContextService>();
                 servicesCollection.AddScoped<IUserService, UserService>();
                 servicesCollection.AddTransient<IUserRepository, UserRepository>();
                 servicesCollection.AddScoped<ICommonService, CommonService>();

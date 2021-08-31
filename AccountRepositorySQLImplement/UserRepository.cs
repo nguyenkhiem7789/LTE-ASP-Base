@@ -1,5 +1,6 @@
 ﻿using System.Data;
 using System.Linq;
+using System.Reflection.Emit;
 using System.Threading.Tasks;
 using AccountCommands.Queries;
 using AccountDomains;
@@ -18,7 +19,7 @@ namespace AccountRepositorySQLImplement
         {
             _dbConnectionFactory = dbConnectionFactory;
         }
-        
+
         public async Task Add(User user)
         {
             await _dbConnectionFactory.WithConnection(async (connection) =>
@@ -32,6 +33,7 @@ namespace AccountRepositorySQLImplement
                 parameters.Add("@PasswordSalt", user.PasswordSalt);
                 parameters.Add("@CreatedDate", user.CreatedDate);
                 parameters.Add("@CreateDateUtc", user.CreateDateUtc);
+                parameters.Add("@Code", user.Code);
                 var data = connection.Execute("[User_Insert]", parameters, commandType: CommandType.StoredProcedure);
                 return await Task.FromResult(true);
             });
@@ -71,6 +73,18 @@ namespace AccountRepositorySQLImplement
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("@ID", query.Id);
                 var data = await connection.QueryFirstOrDefaultAsync<RUser>("[User_GetById]", parameters,
+                    commandType: CommandType.StoredProcedure);
+                return data;
+            });
+        }
+        
+        public async Task<RUser> GetByUserName(AuthenticateQuery query)
+        {
+            return await _dbConnectionFactory.WithConnection(async (connection) =>
+            {
+                DynamicParameters parameters = new DynamicParameters();
+                parameters.Add("@Username", query.Username);
+                var data = await connection.QueryFirstOrDefaultAsync<RUser>("[User_GetByName]", parameters,
                     commandType: CommandType.StoredProcedure);
                 return data;
             });
