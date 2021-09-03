@@ -156,6 +156,12 @@ namespace LTE_ASP_Base.Controllers
         {
             return await ProcessRequest<object>(async (response) =>
             {
+                var results = LoginValidator.ValidateModel(request);
+                if (!results.IsValid)
+                {
+                    response.SetFail(results.Errors.Select(p => p.ToString()));
+                    return;
+                }
                 var result = await _userService.Authenticate(new AuthenticateQuery()
                 {
                     Username = request.Username,

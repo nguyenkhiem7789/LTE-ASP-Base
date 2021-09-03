@@ -2,11 +2,11 @@
 using System.Threading.Tasks;
 using BaseApplication.Controllers;
 using LTE_ASP_Base.Models;
+using LTE_ASP_Base.RMS;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.SignalR;
 
-namespace LTE_ASP_Base.RMS
+namespace LTE_ASP_Base.Controllers
 {
     [ApiController]
     [Route("[controller]")]

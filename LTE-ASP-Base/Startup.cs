@@ -41,9 +41,10 @@ namespace LTE_ASP_Base
                 // configure DI for application services
                 servicesCollection.AddHttpContextAccessor();
                 //servicesCollection.AddScoped<IContextService, ContextS>()
-                servicesCollection.AddTransient<IContextService, ContextService>();
+                servicesCollection.AddScoped<IContextService, ContextService>();
                 servicesCollection.AddScoped<IUserService, UserService>();
-                servicesCollection.AddTransient<IUserRepository, UserRepository>();
+                servicesCollection.AddScoped<INotificationService, NotificationService>();
+                servicesCollection.AddScoped<IUserRepository, UserRepository>();
                 servicesCollection.AddScoped<ICommonService, CommonService>();
                 servicesCollection.AddScoped<ICommonRepository, CommonRepository>();
                 servicesCollection.AddSignalR();

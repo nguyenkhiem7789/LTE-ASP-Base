@@ -97,6 +97,11 @@ namespace AccountManager
             return await ProcessCommand<RLoginModel>(async response =>
             {
                 var rUser = await _userRepository.GetByUserName(query: query);
+                if (rUser == null)
+                {
+                    response.SetFail("User not exist!");
+                    return;
+                }
                 var user = new User(rUser);
                 if (!user.ComparePassword(query.Password))
                 {

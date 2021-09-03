@@ -46,5 +46,20 @@ namespace LTE_ASP_Base.Validations
             return validationResult;
         }
     }
+
+    public class LoginValidator : AbstractValidator<AuthenticateRequest>
+    {
+        public LoginValidator()
+        {
+            RuleFor(x => x.Username).NotEmpty().WithMessage("User name is required.");
+            RuleFor(x => x.Password).NotEmpty().WithMessage("Password is required.");
+        }
+
+        public static FluentValidation.Results.ValidationResult ValidateModel(AuthenticateRequest request)
+        {
+            var validationResult = new LoginValidator().Validate(request);
+            return validationResult;
+        }
+    }
     
 }
