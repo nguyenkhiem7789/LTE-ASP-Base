@@ -10,13 +10,14 @@ using BaseApplication;
 using BaseApplication.Implements;
 using BaseApplication.Interfaces;
 using LTE_ASP_Base.Helpers;
-using LTE_ASP_Base.RMS;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Mvc.ApplicationModels;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using NotificationManager.Services;
+using NotificationManager.Shared;
+using NotificationRepository;
 
 namespace LTE_ASP_Base
 {
@@ -41,14 +42,16 @@ namespace LTE_ASP_Base
                 // configure DI for application services
                 servicesCollection.AddHttpContextAccessor();
                 //servicesCollection.AddScoped<IContextService, ContextS>()
-                servicesCollection.AddScoped<IContextService, ContextService>();
-                servicesCollection.AddScoped<IUserService, UserService>();
-                servicesCollection.AddScoped<INotificationService, NotificationService>();
+                servicesCollection.AddTransient<IContextService, ContextService>();
+                servicesCollection.AddTransient<IUserService, UserService>();
+                servicesCollection.AddTransient<INotificationService, NotificationService>();
+                servicesCollection.AddTransient<ISignalRService, SignalRService>();
                 servicesCollection.AddScoped<IUserRepository, UserRepository>();
-                servicesCollection.AddScoped<ICommonService, CommonService>();
+                servicesCollection.AddTransient<ICommonService, CommonService>();
                 servicesCollection.AddScoped<ICommonRepository, CommonRepository>();
+                servicesCollection.AddScoped<INotificationRepository, NotificationRepositorySQLImplement.NotificationRepository>();
                 servicesCollection.AddSignalR();
-                servicesCollection.AddSingleton<INotificationService, NotificationService>();
+                servicesCollection.AddSingleton<ISignalRService, SignalRService>();
                 return servicesCollection;
             }, false, true);
         }
@@ -86,7 +89,7 @@ namespace LTE_ASP_Base
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
-                endpoints.MapHub<NotificationHub>("/signalr");
+                endpoints.MapHub<SignalRHub>("/signalr");
             });
         }
     }

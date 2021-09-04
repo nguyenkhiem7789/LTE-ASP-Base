@@ -2,6 +2,13 @@
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
+        <RootNamespace>NotificationDomains</RootNamespace>
     </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\BaseDomains\BaseDomains.csproj" />
+      <ProjectReference Include="..\NotificationCommands\NotificationCommands.csproj" />
+      <ProjectReference Include="..\NotificationReadModels\NotificationReadModels.csproj" />
+    </ItemGroup>
 
 </Project>

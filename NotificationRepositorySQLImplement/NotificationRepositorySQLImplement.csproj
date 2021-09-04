@@ -2,6 +2,12 @@
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
+        <RootNamespace>NotificationRepositorySQLImplement</RootNamespace>
     </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\BaseRepositories\BaseRepositories.csproj" />
+      <ProjectReference Include="..\NotificationRepository\NotificationRepository.csproj" />
+    </ItemGroup>
 
 </Project>

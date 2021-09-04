@@ -2,15 +2,15 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.SignalR;
 
-namespace LTE_ASP_Base.RMS
+namespace NotificationManager.Services
 {
-    public class NotificationHub: Hub
+    public class SignalRHub: Hub
     {
-        private readonly INotificationService _notificationService;
+        private readonly ISignalRService _signalRService;
 
-        public NotificationHub(INotificationService notificationService)
+        public SignalRHub(ISignalRService signalRService)
         {
-            _notificationService = notificationService;
+            _signalRService = signalRService;
         }
         
         public override async Task OnConnectedAsync()
@@ -18,13 +18,13 @@ namespace LTE_ASP_Base.RMS
             string connectionId = Context.ConnectionId;
             Console.WriteLine(connectionId);
             string sessionId = "Nguyen";
-            await  _notificationService.Add(connectionId, sessionId);
+            await  _signalRService.Connect(connectionId, sessionId);
             await base.OnConnectedAsync();
         }
 
         public override async Task OnDisconnectedAsync(Exception? exception)
         {
-            await _notificationService.Remove(connectionId: Context.ConnectionId);
+            await _signalRService.Remove(connectionId: Context.ConnectionId);
         }
     }
 }

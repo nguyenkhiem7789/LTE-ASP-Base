@@ -2,17 +2,17 @@
 using EnumDefine;
 using Microsoft.AspNetCore.SignalR;
 
-namespace LTE_ASP_Base.RMS
+namespace NotificationManager.Services
 {
-    public class NotificationService: INotificationService
+    public class SignalRService: ISignalRService
     { 
-        private readonly IHubContext<NotificationHub> _notificationHub;
+        private readonly IHubContext<SignalRHub> _notificationHub;
 
         private string _connectionId;
 
         private NotificationType type = NotificationType.CLIENT;
 
-        public NotificationService(IHubContext<NotificationHub> notificationHub)
+        public SignalRService(IHubContext<SignalRHub> notificationHub)
         {
             _notificationHub = notificationHub;
         }
@@ -33,7 +33,7 @@ namespace LTE_ASP_Base.RMS
             }
         }
 
-        public async Task Add(string connectionId, string sessionId)
+        public async Task Connect(string connectionId, string sessionId)
         {
             _connectionId = connectionId;
             await _notificationHub.Clients.Client(connectionId).SendAsync("OnConnectSuccess", "Connect Signal R success!");

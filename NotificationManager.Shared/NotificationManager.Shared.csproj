@@ -2,6 +2,13 @@
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
+        <RootNamespace>NotificationManager.Shared</RootNamespace>
     </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\BaseCommands\BaseCommands.csproj" />
+      <ProjectReference Include="..\NotificationCommands\NotificationCommands.csproj" />
+      <ProjectReference Include="..\NotificationReadModels\NotificationReadModels.csproj" />
+    </ItemGroup>
 
 </Project>

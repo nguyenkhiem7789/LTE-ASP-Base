@@ -2,6 +2,11 @@
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
+        <RootNamespace>NotificationReadModels</RootNamespace>
     </PropertyGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\BaseReadModels\BaseReadModels.csproj" />
+    </ItemGroup>
 
 </Project>

@@ -28,6 +28,9 @@
       <ProjectReference Include="..\BaseDomains\BaseDomains.csproj" />
       <ProjectReference Include="..\BaseRepositories\BaseRepositories.csproj" />
       <ProjectReference Include="..\Common\Common.csproj" />
+      <ProjectReference Include="..\NotificationManager.Shared\NotificationManager.Shared.csproj" />
+      <ProjectReference Include="..\NotificationManager\NotificationManager.csproj" />
+      <ProjectReference Include="..\NotificationRepositorySQLImplement\NotificationRepositorySQLImplement.csproj" />
       <ProjectReference Include="..\SystemManager.Shared\SystemManager.Shared.csproj" />
       <ProjectReference Include="..\SystemManager\SystemManager.csproj" />
       <ProjectReference Include="..\SystemRepositorySQLImplement\SystemRepositorySQLImplement.csproj" />

@@ -2,10 +2,20 @@
 
     <PropertyGroup>
         <TargetFramework>net5.0</TargetFramework>
+        <RootNamespace>NotificationManager</RootNamespace>
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Validations" />
+      <Reference Include="Microsoft.AspNetCore.SignalR.Core, Version=5.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
+        <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\5.0.9\Microsoft.AspNetCore.SignalR.Core.dll</HintPath>
+      </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <ProjectReference Include="..\BaseApplication\BaseApplication.csproj" />
+      <ProjectReference Include="..\EnumDefine\EnumDefine.csproj" />
+      <ProjectReference Include="..\NotificationManager.Shared\NotificationManager.Shared.csproj" />
+      <ProjectReference Include="..\NotificationRepository\NotificationRepository.csproj" />
     </ItemGroup>
 
 </Project>
