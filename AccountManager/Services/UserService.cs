@@ -44,6 +44,16 @@ namespace AccountManager
             });
         }
 
+        public async Task<BaseCommandResponse<RUser[]>> GetAll()
+        {
+            return await ProcessCommand<RUser[]>(async response =>
+            {
+                var users = await _userRepository.GetAll();
+                response.Data = users;
+                response.SetSuccess();
+            });
+        }
+
         public async Task<BaseCommandResponse<RUser>> GetById(UserGetByIdQuery query)
         {
             return await ProcessCommand<RUser>(async response =>

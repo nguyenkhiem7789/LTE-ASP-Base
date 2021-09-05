@@ -13,6 +13,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using NotificationCommands.Commands;
 using NotificationCommands.Queries;
+using NotificationDomains;
 using NotificationManager.Services;
 using NotificationManager.Shared;
 using NotificationReadModels;
@@ -62,7 +63,8 @@ namespace LTE_ASP_Base.Controllers
                     Code = code,
                     ObjectId = code,
                     Title = request.Title,
-                    Content = request.Content
+                    Content = request.Content,
+                    Status = request.Status
                 });
                 if (!result.Status || result.Data == null)
                 {
@@ -93,7 +95,8 @@ namespace LTE_ASP_Base.Controllers
                 {
                     Id = request.Id,
                     Title = request.Title,
-                    Content = request.Content
+                    Content = request.Content,
+                    Status = request.Status
                 });
                 if (!result.Status)
                 {
@@ -156,13 +159,38 @@ namespace LTE_ASP_Base.Controllers
             });
         }
 
+        [HttpPost("Send")]
+        public async Task<string> Send([FromBody] NotificationSendMessageRequest request)
+        {
+            var retMessage = string.Empty;
+            try
+            {
+                await _signalRService.SendMessage(new NotifyMessage()
+                {
+                    Conditions = request.Conditions,
+                    Type = request.Type,
+                    Value = request.Value
+                });
+                retMessage = "success";
+            }
+            catch (Exception e)
+            {
+                retMessage = e.ToString();
+            }
+
+            return retMessage;
+        }
+
         [HttpPost("Test")]
         public async Task<string> Test([FromBody] SignalRRequest request)
         {
             var retMessage = string.Empty;
             try
             {
-                await _signalRService.SendMessage("this is tessst");
+                await _signalRService.SendMessage(new NotifyMessage()
+                {
+                    Value = "this is tessst"
+                });
                 retMessage = "success";
             }
             catch (Exception e)

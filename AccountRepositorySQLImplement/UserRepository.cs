@@ -32,7 +32,7 @@ namespace AccountRepositorySQLImplement
                 parameters.Add("@PasswordHash", user.PasswordHash);
                 parameters.Add("@PasswordSalt", user.PasswordSalt);
                 parameters.Add("@CreatedDate", user.CreatedDate);
-                parameters.Add("@CreateDateUtc", user.CreateDateUtc);
+                parameters.Add("@CreatedDateUtc", user.CreateDateUtc);
                 parameters.Add("@Code", user.Code);
                 var data = connection.Execute("[User_Insert]", parameters, commandType: CommandType.StoredProcedure);
                 return await Task.FromResult(true);
@@ -60,6 +60,18 @@ namespace AccountRepositorySQLImplement
                 DynamicParameters parameters = new DynamicParameters();
                 parameters.Add("@Keyword", query.Keyword);
                 var data = await connection.QueryAsync<RUser>("[User_Gets]", parameters,
+                    commandType: CommandType.StoredProcedure);
+                var users = data.ToArray();
+                return users;
+            });
+        }
+
+        public async Task<RUser[]> GetAll()
+        {
+            return await _dbConnectionFactory.WithConnection(async (connection) =>
+            {
+                DynamicParameters parameters = new DynamicParameters();
+                var data = await connection.QueryAsync<RUser>("[User_GetAll]", parameters,
                     commandType: CommandType.StoredProcedure);
                 var users = data.ToArray();
                 return users;

@@ -11,5 +11,7 @@ namespace BaseApplication.Interfaces
         Task<bool> IsAuthenticated();
         Task<(string, int)> CreateToken(User user, bool remember);
         void LogError(Exception exception, string message);
+        Task<string> SessionKeyGet();
+        Task SessionKeySet(string sessionId);
     }
 }

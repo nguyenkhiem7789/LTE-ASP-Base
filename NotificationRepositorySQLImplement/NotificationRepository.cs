@@ -51,6 +51,10 @@ namespace NotificationRepositorySQLImplement
                 parameters.Add("@ID", notification.Id);
                 parameters.Add("@Title", notification.Title);
                 parameters.Add("@Content", notification.Content);
+                parameters.Add("@CreatedDate", notification.CreatedDate);
+                parameters.Add("@CreatedDateUtc", notification.CreateDateUtc);
+                parameters.Add("@Code", notification.Code);
+                parameters.Add("@Status", notification.Status);
                 var data = connection.Execute("[Notification_Insert]", parameters,
                     commandType: CommandType.StoredProcedure);
                 return await Task.FromResult(true);
@@ -66,6 +70,7 @@ namespace NotificationRepositorySQLImplement
                 parameters.Add("@ID", notification.Id);
                 parameters.Add("@Title", notification.Title);
                 parameters.Add("@Content", notification.Content);
+                parameters.Add("@Status", notification.Status);
                 var data = connection.Execute("[Notification_Update]", parameters,
                     commandType: CommandType.StoredProcedure);
                 return await Task.FromResult(true);

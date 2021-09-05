@@ -11,7 +11,8 @@ namespace LTE_ASP_Base.Mappings
             {
                 Id = rNotification.Id,
                 Title = rNotification.Title,
-                Content = rNotification.Content
+                Content = rNotification.Content,
+                Status = rNotification.Status
             };
             return model;
         }

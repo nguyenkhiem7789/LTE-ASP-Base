@@ -7,6 +7,7 @@ using AccountDomains;
 using BaseApplication.Interfaces;
 using BaseReadModels;
 using LTE_ASP_Base.Helpers;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Options;
 using Microsoft.IdentityModel.Tokens;
 
@@ -16,10 +17,15 @@ namespace BaseApplication.Implements
     {
 
         private readonly AppSettings _appSettings; 
+        private const string Lang = "lang";
+        public const string SessionCode = "VNNSS";
+        private const string Authorization = "Authorization";
+        private readonly IHttpContextAccessor _httpContextAccessor;
 
-        public ContextService(IOptions<AppSettings> appSettings)
+        public ContextService(IOptions<AppSettings> appSettings, IHttpContextAccessor httpContextAccessor)
         {
             _appSettings = appSettings.Value;
+            _httpContextAccessor = httpContextAccessor;
         }
         
         public Task<string> GetIp()
@@ -56,7 +62,25 @@ namespace BaseApplication.Implements
 
         public void LogError(Exception exception, string message)
         {
-            throw new NotImplementedException();
+            
+        }
+
+        private string _sessionKey;
+
+        public async Task<string> SessionKeyGet()
+        {
+            if (string.IsNullOrEmpty(_sessionKey))
+            {
+                _sessionKey = _httpContextAccessor?.HttpContext?.User?.FindFirst(SessionCode)?.Value;
+            }
+
+            return await Task.FromResult(_sessionKey);
+        }
+
+        public Task SessionKeySet(string sessionId)
+        {
+            _sessionKey = sessionId;
+            return Task.CompletedTask;
         }
     }
 }

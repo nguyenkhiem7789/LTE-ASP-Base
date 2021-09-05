@@ -123,6 +123,26 @@ namespace LTE_ASP_Base.Controllers
             });
         }
 
+        [HttpGet("GetAll")]
+        public async Task<BaseResponse<object>> GetAll()
+        {
+            return await ProcessRequest<object>(async response =>
+            {
+                var result = await _userService.GetAll();
+                if (!result.Status || result.Data == null)
+                {
+                    response.SetFail(result.Messages);
+                    return;
+                }
+                response.Data = new
+                {
+                    TotalRow = result.TotalRow,
+                    Models = result.Data?.Select(UserMapping.ToModel)
+                };
+                response.SetSuccess();
+            });
+        }
+
         [HttpPost("GetById")]
         public async Task<BaseResponse<object>> GetById([FromBody] UserGetByIdRequest request)
         {

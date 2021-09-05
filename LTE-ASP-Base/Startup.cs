@@ -44,7 +44,6 @@ namespace LTE_ASP_Base
                 //servicesCollection.AddScoped<IContextService, ContextS>()
                 servicesCollection.AddTransient<IContextService, ContextService>();
                 servicesCollection.AddTransient<IUserService, UserService>();
-                servicesCollection.AddTransient<INotificationService, NotificationService>();
                 servicesCollection.AddTransient<ISignalRService, SignalRService>();
                 servicesCollection.AddScoped<IUserRepository, UserRepository>();
                 servicesCollection.AddTransient<ICommonService, CommonService>();
@@ -52,6 +51,7 @@ namespace LTE_ASP_Base
                 servicesCollection.AddScoped<INotificationRepository, NotificationRepositorySQLImplement.NotificationRepository>();
                 servicesCollection.AddSignalR();
                 servicesCollection.AddSingleton<ISignalRService, SignalRService>();
+                servicesCollection.AddTransient<INotificationService, NotificationService>();
                 return servicesCollection;
             }, false, true);
         }

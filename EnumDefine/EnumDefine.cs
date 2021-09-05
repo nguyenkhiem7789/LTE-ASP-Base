@@ -25,6 +25,13 @@
         Active = 1,
         InActive = 2
     }
+    
+    public enum NotificationStatusType
+    {
+        Delete = 0,
+        Active = 1,
+        InActive = 2
+    }
 
     public enum NotificationType
     {

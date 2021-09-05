@@ -8,6 +8,7 @@ namespace AccountRepository
     public interface IUserRepository
     {
         Task<RUser[]> Gets(UserGetsQuery query);
+        Task<RUser[]> GetAll();
         Task<RUser> GetById(UserGetByIdQuery query);
         Task<RUser> GetByUserName(AuthenticateQuery query);
         Task Add(User user);

@@ -1,6 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using EnumDefine;
 using Microsoft.AspNetCore.SignalR;
+using NotificationDomains;
 
 namespace NotificationManager.Services
 {
@@ -17,7 +19,7 @@ namespace NotificationManager.Services
             _notificationHub = notificationHub;
         }
 
-        public async Task SendMessage(string message)
+        public async Task SendMessage(NotifyMessage message)
         {
             switch (type)
             {
@@ -28,7 +30,7 @@ namespace NotificationManager.Services
                     await _notificationHub.Clients.Group("Group").SendAsync("Notify", message);
                     break;
                 case NotificationType.CLIENT:
-                    await _notificationHub.Clients.Client(_connectionId).SendAsync("Notify", message);
+                    await _notificationHub.Clients.Clients(message.Conditions.Distinct().ToArray()).SendAsync("Notify", message);
                     break;
             }
         }

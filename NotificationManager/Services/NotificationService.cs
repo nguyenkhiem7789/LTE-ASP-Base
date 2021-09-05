@@ -17,12 +17,11 @@ namespace NotificationManager.Services
     {
         private readonly INotificationRepository _notificationRepository;
 
-        protected NotificationService(
-            INotificationRepository notificationRepository,
-            ILogger<BaseService> logger) : base(logger)
+        public NotificationService(INotificationRepository notificationRepository, ILogger<BaseService> logger) : base(logger)
         {
             _notificationRepository = notificationRepository;
         }
+        
         public async Task<BaseCommandResponse<RNotification[]>> Gets(NotificationGetsQuery query)
         {
             return await ProcessCommand<RNotification[]>(async response =>

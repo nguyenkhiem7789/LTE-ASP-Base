@@ -10,6 +10,7 @@ namespace AccountManager.Shared
     public interface IUserService
     {
         Task<BaseCommandResponse<RUser[]>> Gets(UserGetsQuery query);
+        Task<BaseCommandResponse<RUser[]>> GetAll();
         Task<BaseCommandResponse<RUser>> GetById(UserGetByIdQuery query);
         Task<BaseCommandResponse<string>> Add(UserAddCommand command);
         Task<BaseCommandResponse> Change(UserChangeCommand command);
