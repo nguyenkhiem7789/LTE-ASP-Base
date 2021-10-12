@@ -1,7 +1,9 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using BaseApplication.Implements;
 using BaseCommands;
+using Hangfire;
 using Microsoft.Extensions.Logging;
 using NotificationCommands.Commands;
 using NotificationCommands.Queries;
@@ -17,9 +19,12 @@ namespace NotificationManager.Services
     {
         private readonly INotificationRepository _notificationRepository;
 
-        public NotificationService(INotificationRepository notificationRepository, ILogger<BaseService> logger) : base(logger)
+        private readonly IRecurringJobManager _recurringJobManager;
+
+        public NotificationService(INotificationRepository notificationRepository, ILogger<BaseService> logger, IRecurringJobManager recurringJobManager) : base(logger)
         {
             _notificationRepository = notificationRepository;
+            _recurringJobManager = recurringJobManager;
         }
         
         public async Task<BaseCommandResponse<RNotification[]>> Gets(NotificationGetsQuery query)
@@ -77,9 +82,15 @@ namespace NotificationManager.Services
                 var notification = new Notification(rNotification);
                 notification.Change(command: command);
                 await _notificationRepository.Change(notification);
+                // Hangfire - Schedule send notification each second
+                _recurringJobManager.AddOrUpdate($"Notification_{command.Id}", () => Test(), "* * * * *");
                 response.SetSuccess();
             });
         }
-        
+
+        public void Test()
+        {
+            Console.WriteLine("This is test");
+        }
     }
 }

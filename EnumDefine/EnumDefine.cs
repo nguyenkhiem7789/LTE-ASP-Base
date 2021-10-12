@@ -24,6 +24,12 @@
         Delete = 0,
         Active = 1,
         InActive = 2
+    } 
+    
+    public enum RoleStatusType
+    {
+        Active = 1,
+        InActive = 2
     }
     
     public enum NotificationStatusType

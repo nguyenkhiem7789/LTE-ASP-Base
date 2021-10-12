@@ -1,5 +1,6 @@
 ﻿using FluentValidation;
 using LTE_ASP_Base.Models;
+using LTE_ASP_Base.Shared.Requests;
 
 namespace LTE_ASP_Base.Validations
 {

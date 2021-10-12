@@ -30,12 +30,8 @@ namespace LTE_ASP_Base.Controllers
 
         private readonly ICommonService _commonService;
         
-        public NotificationController(
-            IHttpContextAccessor httpContextAccessor, 
-            ISignalRService signalRService, 
-            INotificationService notificationService,
-            ICommonService commonService
-            ) : base(httpContextAccessor)
+        public NotificationController(IHttpContextAccessor httpContextAccessor, ISignalRService signalRService, 
+            INotificationService notificationService, ICommonService commonService) : base(httpContextAccessor)
         {
             _signalRService = signalRService;
             _notificationService = notificationService;
@@ -177,7 +173,6 @@ namespace LTE_ASP_Base.Controllers
             {
                 retMessage = e.ToString();
             }
-
             return retMessage;
         }
 
@@ -197,7 +192,6 @@ namespace LTE_ASP_Base.Controllers
             {
                 retMessage = e.ToString();
             }
-
             return retMessage;
         }
     }

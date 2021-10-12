@@ -1,9 +1,4 @@
-﻿using System;
-using System.Diagnostics;
-using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using AccountCommands.Commands;
 using AccountCommands.Queries;
@@ -15,20 +10,16 @@ using AccountRepository;
 using BaseApplication.Implements;
 using BaseApplication.Interfaces;
 using BaseCommands;
-using LTE_ASP_Base.Helpers;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using Microsoft.IdentityModel.Tokens;
 
 namespace AccountManager
 {
     public class UserService : BaseService, IUserService
     {
         private IContextService _contextService;
-        
         private IUserRepository _userRepository;
         
-        public UserService(IContextService contextService, ILogger<BaseService> logger, IUserRepository userRepository) : base(/*contextService, */logger)
+        public UserService(ILogger<BaseService> logger, IContextService contextService, IUserRepository userRepository) : base(/*contextService, */logger)
         {
             _contextService = contextService;
             _userRepository = userRepository;

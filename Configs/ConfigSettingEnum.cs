@@ -6,5 +6,9 @@ namespace Configs
     {
         [Display(Name = "ConnectionStrings:DbConnectionString")]
         DbConnectionString,
+        [Display(Name = "RedisHostIps")]
+        RedisHostIps,
+        [Display(Name = "RedisPassword")]
+        RedisPassword
     }
 }

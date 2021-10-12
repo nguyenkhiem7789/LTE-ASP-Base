@@ -1,3 +1,4 @@
+using System;
 using SystemManager.Services;
 using SystemManager.Shared;
 using SystemRepository;
@@ -9,6 +10,9 @@ using AccountRepositorySQLImplement;
 using BaseApplication;
 using BaseApplication.Implements;
 using BaseApplication.Interfaces;
+using Cache;
+using Hangfire;
+using Hangfire.MemoryStorage;
 using LTE_ASP_Base.Helpers;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -52,13 +56,24 @@ namespace LTE_ASP_Base
                 servicesCollection.AddSignalR();
                 servicesCollection.AddSingleton<ISignalRService, SignalRService>();
                 servicesCollection.AddTransient<INotificationService, NotificationService>();
+                servicesCollection.AddHangfire(config =>                 
+                    config.SetDataCompatibilityLevel(CompatibilityLevel.Version_170)
+                        .UseSimpleAssemblyNameTypeSerializer()
+                        .UseDefaultTypeSerializer()
+                        .UseMemoryStorage());
+                servicesCollection.AddHangfireServer();
+                servicesCollection.AddDistributedRedisCache(options =>
+                {
+                    options.Configuration = "127.0.0.1";
+                    options.InstanceName = "master";
+                });
                 return servicesCollection;
             }, false, true);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
-        {
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, IBackgroundJobClient backgroundJobClient,
+            IRecurringJobManager recurringJobManager, IServiceProvider serviceProvider) {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
@@ -81,7 +96,7 @@ namespace LTE_ASP_Base
                 .SetIsOriginAllowed(origin => true) // allow any origin
                 .AllowCredentials());
 
-            // custom jwt auth middleware
+            // custom jwt auth middleware 
             app.UseMiddleware<JwtMiddleware>();
 
             app.UseEndpoints(endpoints =>
@@ -91,6 +106,10 @@ namespace LTE_ASP_Base
                     pattern: "{controller=Home}/{action=Index}/{id?}");
                 endpoints.MapHub<SignalRHub>("/signalr");
             });
+
+            app.UseHangfireDashboard();
+            backgroundJobClient.Enqueue(() => Console.WriteLine("Hello Hangfire job!"));
+            //recurringJobManager.AddOrUpdate("Run every minute", () => serviceProvider.GetService<INotificationService>().Test(), "* * * * *");
         }
     }
 }

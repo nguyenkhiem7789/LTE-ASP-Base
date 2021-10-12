@@ -4,10 +4,10 @@ using EnumDefine;
 
 namespace AccountCommands.Queries
 {
-    public class UserGetsQuery : BasePagingQuery
+    public class RoleGetsQuery : BasePagingQuery
     {
         public string Keyword { get; set; }
-        public UserStatusType Status { get; set; }
+        public RoleStatusType Status { get; set; }
         public override string ObjectId { get; set; }
         public override string ProcessUid { get; set; }
         public override DateTime ProcessDate { get; set; }
@@ -16,15 +16,8 @@ namespace AccountCommands.Queries
         public override int PageSize { get; set; }
     }
 
-    public class UserGetByIdQuery : AccountBaseCommand
+    public class RoleGetByIdQuery : AccountBaseCommand
     {
         public string Id { get; set; }
-    }
-
-    public class AuthenticateQuery : AccountBaseCommand
-    {
-        public string Username { get; set; }
-        public string Password { get; set; }
-        public bool Remember { get; set; }
     }
 }

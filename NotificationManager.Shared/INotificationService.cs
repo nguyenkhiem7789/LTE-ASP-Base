@@ -12,5 +12,6 @@ namespace NotificationManager.Shared
         Task<BaseCommandResponse<RNotification>> GetById(NotificationGetByIdQuery query);
         Task<BaseCommandResponse<string>> Add(NotificationAddCommand command);
         Task<BaseCommandResponse> Change(NotificationChangeCommand command);
+        void Test();
     }
 }

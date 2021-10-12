@@ -1,7 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations;
-using EnumDefine;
+﻿using EnumDefine;
 
-namespace LTE_ASP_Base.Models
+namespace LTE_ASP_Base.Shared.Requests
 {
     public class UserAddRequest
     {
@@ -19,7 +18,7 @@ namespace LTE_ASP_Base.Models
         public UserStatusType Status { get; set; }
     }
 
-    public class UserGetRequest
+    public class UserGetsRequest
     {
         public string Keyword { get; set; }
         public UserStatusType Status { get; set; }

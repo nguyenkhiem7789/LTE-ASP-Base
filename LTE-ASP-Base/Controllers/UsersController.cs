@@ -12,6 +12,7 @@ using BaseApplication.Controllers;
 using BaseReadModels;
 using LTE_ASP_Base.Mappings;
 using LTE_ASP_Base.Models;
+using LTE_ASP_Base.Shared.Requests;
 using LTE_ASP_Base.Validations;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -98,7 +99,7 @@ namespace LTE_ASP_Base.Controllers
         }
 
         [HttpPost("Gets")]
-        public async Task<BaseResponse<object>> Gets([FromBody] UserGetRequest request)
+        public async Task<BaseResponse<object>> Gets([FromBody] UserGetsRequest request)
         {
             return await ProcessRequest<object>(async (response) =>
             {
